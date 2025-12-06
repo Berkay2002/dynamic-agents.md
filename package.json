@@ -1,6 +1,6 @@
 {
     "name": "create-agent-context",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Create a self-evolving AGENTS.md structure for AI coding agents",
     "bin": {
         "create-agent-context": "./bin/create-agent-context.js"
@@ -23,6 +23,9 @@
     },
     "files": [
         "bin",
-        "templates"
+        "setup.sh",
+        "setup.ps1",
+        "MIGRATION.md",
+        "README.md"
     ]
 }
