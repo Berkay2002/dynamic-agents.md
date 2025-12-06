@@ -1,0 +1,28 @@
+{
+    "name": "create-agent-context",
+    "version": "1.0.0",
+    "description": "Create a self-evolving AGENTS.md structure for AI coding agents",
+    "bin": {
+        "create-agent-context": "./bin/create-agent-context.js"
+    },
+    "keywords": [
+        "agents",
+        "ai",
+        "context",
+        "agents.md",
+        "coding-agents",
+        "gemini",
+        "cursor",
+        "copilot"
+    ],
+    "author": "",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": ""
+    },
+    "files": [
+        "bin",
+        "templates"
+    ]
+}
