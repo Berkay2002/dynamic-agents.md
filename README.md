@@ -52,14 +52,12 @@ your-project/
 
 ---
 
-## Publishing to npm
+## Migrating Existing Notes
 
-To make `npx create-agent-context` work globally:
-
-```bash
-npm login
-npm publish
-```
+- We scaffold a ready-to-use [MIGRATION.md](MIGRATION.md). Paste it to your agent (Claude, Gemini, Copilot, etc.) and ask it to follow the steps.
+- The guide tells the agent to detect legacy docs (agents.md, claude.md, docs/, notes/, ai/, etc.), map them into `.agent/context/`, append instead of overwrite, and log the changes in `.agent/context/changelog.md`.
+- If you want a dry run, ask the agent to summarize its plan before writing.
+- If an `AGENTS.md` already exists, the CLI renames it to `AGENTS.old.md` (or `AGENTS.old.<n>.md` if needed) and writes a fresh `AGENTS.md` template so you can merge via MIGRATION.md.
 
 ---
 
