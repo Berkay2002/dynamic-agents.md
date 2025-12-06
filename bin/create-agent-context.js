@@ -164,11 +164,84 @@ Format:
 ## YYYY-MM-DD
 - **Brief summary** - Details about what changed
 -->
+`,
+
+    '.agent/context/codebase-scan.md': `# Codebase Scan Playbook
+
+Use this when you need to pull fresh context from the repository (code + docs) and feed it into the AGENTS.md structure.
+
+## What to gather
+- High-level purpose and domain from README and top-level docs.
+- Runtime entry points, major modules, and data flows.
+- Build/dev/test commands found in package manifests or scripts.
+- Coding conventions observed in the code (lint configs, style files).
+- Any generated or vendored areas to avoid summarizing (e.g., dist/, build/, node_modules/).
+
+## How to scan
+1. Enumerate source roots (e.g., src/, app/, services/, backend/, frontend/) and list main languages/frameworks.
+2. Read key entry files (index/main/app/server) to map startup flow and dependencies.
+3. For each major module, skim public interfaces and note responsibilities and cross-module calls.
+4. Inspect configs (package.json, pyproject.toml, tsconfig, docker files, CI) for commands and environment requirements.
+5. Skip noisy directories: node_modules, dist, build, .next, .turbo, .venv, coverage, .git.
+
+## Where to write
+- Add architecture/system notes to .agent/context/architecture.md.
+- Add project purpose and domain summary to .agent/context/overview.md.
+- Add commands you find to .agent/context/commands.md.
+- Add observed conventions (lint rules, formatting, typing strictness) to .agent/context/conventions.md.
+- Log what you scanned in .agent/context/changelog.md with paths touched and summaries added.
+
+## Safety
+- Do not delete or overwrite existing context; append under a new heading (e.g., "Code scan YYYY-MM-DD").
+- Keep code snippets short; prefer summaries over large excerpts.
+- If uncertain about a module, add a note for follow-up instead of guessing.
+`,
+
+    '.agent/task/README.md': `# Plans and PRDs
+
+Use this folder to save plans/PRDs before implementation.
+
+Template (copy into a new file named \`<task>.md\`):
+
+## Context
+- Brief description of the task and scope.
+
+## Objectives
+- Bulleted goals and non-goals.
+
+## Plan
+- Sequenced steps or milestones.
+
+## Decisions / Risks
+- Key choices, assumptions, and risks.
+
+## Links
+- Relevant context files, issues, or specs.
+`,
+
+    '.agent/SOPs/README.md': `# SOPs
+
+Use this folder to store ultra-short post-fix recipes.
+
+Template (copy into a new file named \`<topic>.md\`):
+
+## Problem
+- What was broken and symptoms.
+
+## Fix
+- Steps taken to resolve.
+
+## Pitfalls / Commands
+- Traps to avoid next time.
+- Commands or scripts used.
+
+## Related Docs
+- Links to context files or code touched.
 `
 };
 
 // Create directories
-const dirs = ['.agent', '.agent/context'];
+const dirs = ['.agent', '.agent/context', '.agent/task', '.agent/SOPs'];
 dirs.forEach(dir => {
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
@@ -190,20 +263,25 @@ Object.entries(templates).forEach(([filePath, content]) => {
         }
 
         fs.renameSync(fullPath, backupPath);
-        console.log(`🔁 Renamed existing AGENTS.md to ${path.basename(backupPath)}`);
+        console.log(`Renamed existing AGENTS.md to ${path.basename(backupPath)}`);
         fs.writeFileSync(fullPath, content, 'utf8');
-        console.log('✅ Created AGENTS.md');
+        console.log('Created AGENTS.md');
         return;
     }
 
     if (fs.existsSync(fullPath)) {
-        console.log(`⏭️  Skipping ${filePath} (already exists)`);
+        console.log(`⏭Skipping ${filePath} (already exists)`);
     } else {
         fs.writeFileSync(fullPath, content, 'utf8');
-        console.log(`✅ Created ${filePath}`);
+        console.log(`Created ${filePath}`);
     }
 });
 
 console.log('\nAGENTS.md structure created!');
 console.log('\nYour AI coding agents will now see the self-update directive');
 console.log('and keep your context files current as they work.\n');
+console.log('Usage tips:');
+console.log('- MIGRATION.md: Paste to your agent to import existing docs into the new structure.');
+console.log('- codebase-scan.md: Have your agent summarize the codebase into context files.');
+console.log('- .agent/task/: Use for plans/PRDs (see its README).');
+console.log('- .agent/SOPs/: Use for short fix recipes (see its README).\n');

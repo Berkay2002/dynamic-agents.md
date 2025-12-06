@@ -52,9 +52,6 @@
 ---
 
 ## Recent Activity
-
-@./agent/context/changelog.md
-
 ---
 
 ## Project-Specific Context
